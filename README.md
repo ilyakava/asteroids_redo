@@ -1,8 +1,5 @@
-asteroids
-=========
-Project exploring canvas.
+##play some asteroids~
+pew pew
 
-TODO
-bullets
-death
-velocity max
+up left right to move
+space bar to shoot and reset

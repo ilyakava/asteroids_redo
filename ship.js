@@ -9,19 +9,22 @@ var Ship = function (game, radius) {
   this.acceleration = { x:0, y:0 }
   this.angularVelocity = 0;
 	this.power = false;
+	this.hasBullets = true;
 
   var that = this;
-  key('left', function(){ that.angularVelocity = -(Math.PI/3)/10  });
-
-  key('right', function(){ that.angularVelocity = (Math.PI/3)/10 });
-
-  key('up', function(){
-		that.power = true;
-  });
+  key('left', function(){ that.angularVelocity = -(Math.PI/30) });
+  key('right', function(){ that.angularVelocity = (Math.PI/30) });
+  key('up', function(){ that.power = true });
+	key('space', function(){
+		if(that.hasBullets){
+			that.fireBullet();
+		}
+	});
 
   keyup('right', function(){ that.angularVelocity = 0 });
   keyup('left', function(){ that.angularVelocity = 0 });
-  keyup('up', function(){that.power = false });
+  keyup('up', function(){ that.power = false });
+	keyup('space', function(){ that.hasBullets = true });
 
 }
 
@@ -48,8 +51,32 @@ Ship.prototype.render = function (ctx) {
   ctx.restore();
 };
 
-Ship.prototype.isHit = function (asteroid) {
-	var that = this;
-	var distance = Math.sqrt(Math.pow(that.centerX - asteroid.centerX, 2) + Math.pow(that.centerY - asteroid.centerY, 2));
-	return distance < this.radius + asteroid.radius
+Ship.prototype.fireBullet = function () {
+	this.hasBullets = false;
+	var bullet = new Bullet(this);
+	this.game.bullets.push(bullet);
 }
+
+var Bullet = function(ship){
+	MovingObjects.MovingObject.call(this,ship.centerX,ship.centerY,1);
+	this.velocity = { x: Math.sin(ship.angle)*6, y: -Math.cos(ship.angle) * 6 }
+}
+
+Bullet.prototype = new Surrogate2();
+
+Bullet.prototype.render = function (ctx) {
+  ctx.beginPath();
+  ctx.arc(
+    this.centerX,
+    this.centerY,
+    1,
+    0,
+    2 * Math.PI,
+    false
+  );
+	ctx.fillStyle = 'white';
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 1.25;
+  ctx.stroke();
+}
+

@@ -9,7 +9,7 @@ function Asteroid(screenX, screenY, radius, deltaX, deltaY, game) {
 
 };
 
-Asteroid.MAX_RADIUS = 17.5;
+Asteroid.RADIUS = 12;
 Asteroid.MAX_VELOCITY = 2;
 Asteroid.randomAsteroid = function(screenX, screenY, game) {
   var yingYang = function() {
@@ -18,11 +18,25 @@ Asteroid.randomAsteroid = function(screenX, screenY, game) {
   return new Asteroid(
     screenX * Math.random(),
     screenY * Math.random(),
-    Asteroid.MAX_RADIUS * Math.random() + 7.5,
+    Asteroid.RADIUS * Math.floor(Math.random() * 3 + 1),
     Asteroid.MAX_VELOCITY * Math.random() * yingYang(),
     Asteroid.MAX_VELOCITY * Math.random() * yingYang(),
     game
   );
+}
+
+Asteroid.newAsteroid = function(oldAsteroid,game,newSize) {
+  var yingYang = function() {
+    return [-1,1][Math.floor(Math.random()*2)];
+  }
+	return new Asteroid(
+    oldAsteroid.centerX,
+    oldAsteroid.centerY,
+    newSize,
+    Asteroid.MAX_VELOCITY * Math.random() * yingYang() + oldAsteroid.deltaX,
+    Asteroid.MAX_VELOCITY * Math.random() * yingYang() + oldAsteroid.deltaY,
+    game
+	);
 }
 
 Asteroid.prototype = new Surrogate();
