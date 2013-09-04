@@ -58,8 +58,8 @@ Ship.prototype.fireBullet = function () {
 }
 
 var Bullet = function(ship){
-	MovingObjects.MovingObject.call(this,ship.centerX,ship.centerY,1);
-	this.velocity = { x: Math.sin(ship.angle)*6, y: -Math.cos(ship.angle) * 6 }
+	MovingObjects.MovingObject.call(this,(ship.centerX + Math.sin(ship.angle)*8),(ship.centerY + -Math.cos(ship.angle)*8),1);
+	this.velocity = { x: (Math.sin(ship.angle)*8 + ship.velocity.x), y: (-Math.cos(ship.angle)*8 + ship.velocity.y) }
 }
 
 Bullet.prototype = new Surrogate2();

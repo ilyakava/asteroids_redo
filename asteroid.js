@@ -39,6 +39,35 @@ Asteroid.newAsteroid = function(oldAsteroid,game,newSize) {
 	);
 }
 
+Asteroid.respawn = function(game) {
+  var yingYang = function() {
+    return [-1,1][Math.floor(Math.random()*2)];
+  }
+	var result = [];
+	for(var i=0; i<10; i++){
+		var coord1 = Math.floor(game.screenX / 2) + ((Math.floor(game.screenX / 2) + 36) * yingYang());
+		var coord2 = Math.random() * game.screenX;
+		if (yingYang() > 0) {
+			var x = coord1;
+			var y = coord2;
+		} else {
+			var y = coord1;
+			var x = coord2;
+		}
+		result.push(
+			new Asteroid(
+				x,
+				y,
+				36,
+				Asteroid.MAX_VELOCITY * Math.random() * yingYang(),
+				Asteroid.MAX_VELOCITY * Math.random() * yingYang(),
+				game
+			)
+		)
+	}
+	return result;
+}
+
 Asteroid.prototype = new Surrogate();
 
 Asteroid.prototype.render = function (ctx) {

@@ -125,6 +125,10 @@ Game.prototype.update = function () {
 		}
 	}
 
+	if (that.asteroids.length == 0) {
+		that.asteroids = Asteroid.respawn(that);
+	}
+
   var updateShip = function () {
 		
 		that.ship.velocity.y = that.ship.velocity.y * .985
