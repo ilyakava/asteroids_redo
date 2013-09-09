@@ -19,7 +19,9 @@ var MovingObjects = (function () {
   };
 
   MovingObject.prototype.update = function (deltaX, deltaY) {
-		switch (this.offScreen(500, 500)) {
+		// Just like the ruby case statement
+    // ruby: case/when => JS: switch/case
+    switch (this.offScreen(500, 500)) {
 		case "right":
 			this.centerX = 501 - this.centerX;
 			break;
