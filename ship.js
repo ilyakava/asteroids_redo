@@ -1,3 +1,5 @@
+"use strict";
+
 function Surrogate2() {}
 Surrogate2.prototype = MovingObjects.MovingObject.prototype;
 

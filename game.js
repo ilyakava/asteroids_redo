@@ -1,3 +1,5 @@
+"use strict";
+
 var Game = function (screenX, screenY, numAsteroids) {
   this.screenX = screenX;
   this.screenY = screenY;
@@ -128,18 +130,18 @@ Game.prototype.update = function () {
 		}
 	}
 
-	if (that.asteroids.length == 0) {
+	if (!that.asteroids.length) {
 		that.asteroids = Asteroid.respawn(that);
 	}
 
   var updateShip = function () {
 		
-		that.ship.velocity.y = that.ship.velocity.y * .985
-		that.ship.velocity.x = that.ship.velocity.x * .985
+		that.ship.velocity.y = that.ship.velocity.y * 0.985;
+		that.ship.velocity.x = that.ship.velocity.x * 0.985;
 		
-		if(that.ship.power) {
-			that.ship.acceleration.y = Math.cos(that.ship.angle) * .2;
-			that.ship.acceleration.x = Math.sin(that.ship.angle) * .2;
+		if (that.ship.power) {
+			that.ship.acceleration.y = Math.cos(that.ship.angle) * 0.2;
+			that.ship.acceleration.x = Math.sin(that.ship.angle) * 0.2;
 		} else {
 			that.ship.acceleration.y = 0;
 			that.ship.acceleration.x = 0;
@@ -148,7 +150,7 @@ Game.prototype.update = function () {
     that.ship.velocity.x += that.ship.acceleration.x;
     that.ship.velocity.y -= that.ship.acceleration.y;
 
-    that.ship.angle += that.ship.angularVelocity
+    that.ship.angle += that.ship.angularVelocity;
 		
     that.ship.update(that.ship.velocity.x, that.ship.velocity.y);
   };
@@ -185,14 +187,14 @@ Game.prototype.update = function () {
 				}
 				that.asteroids.splice(asteroidIndex, 1);
 			}
-		})
-	}
+		});
+	};
 
   var updateAsteroid = function (asteroid) {
     asteroid.update(asteroid.deltaX, asteroid.deltaY);
   };
 
-	_.each(this.bullets,updateBullet)
+	_.each(this.bullets,updateBullet);
   _.each(this.asteroids, updateAsteroid);
   updateShip();
 };

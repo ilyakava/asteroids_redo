@@ -1,3 +1,5 @@
+"use strict";
+
 var MovingObjects = (function () {
 
   function MovingObject (centerX, centerY, radius) {
