@@ -1,4 +1,4 @@
-function Surrogate() {};
+function Surrogate() {}
 Surrogate.prototype = MovingObjects.MovingObject.prototype;
 
 function Asteroid(screenX, screenY, radius, deltaX, deltaY, game) {
@@ -6,15 +6,14 @@ function Asteroid(screenX, screenY, radius, deltaX, deltaY, game) {
   this.deltaX = deltaX;
   this.deltaY = deltaY;
   this.game = game;
-
-};
+}
 
 Asteroid.RADIUS = 12;
 Asteroid.MAX_VELOCITY = 2;
 Asteroid.randomAsteroid = function(screenX, screenY, game) {
   var yingYang = function() {
     return [-1,1][Math.floor(Math.random()*2)];
-  }
+  };
   return new Asteroid(
     screenX * Math.random(),
     screenY * Math.random(),
@@ -23,12 +22,12 @@ Asteroid.randomAsteroid = function(screenX, screenY, game) {
     Asteroid.MAX_VELOCITY * Math.random() * yingYang(),
     game
   );
-}
+};
 
-Asteroid.newAsteroid = function(oldAsteroid,game,newSize) {
+Asteroid.newAsteroid = function(oldAsteroid, game, newSize) {
   var yingYang = function() {
     return [-1,1][Math.floor(Math.random()*2)];
-  }
+  };
 	return new Asteroid(
     oldAsteroid.centerX,
     oldAsteroid.centerY,
@@ -37,22 +36,23 @@ Asteroid.newAsteroid = function(oldAsteroid,game,newSize) {
     Asteroid.MAX_VELOCITY * Math.random() * yingYang() + oldAsteroid.deltaY,
     game
 	);
-}
+};
 
 Asteroid.respawn = function(game) {
   var yingYang = function() {
     return [-1,1][Math.floor(Math.random()*2)];
-  }
+  };
 	var result = [];
 	for(var i=0; i<10; i++){
 		var coord1 = Math.floor(game.screenX / 2) + ((Math.floor(game.screenX / 2) + 36) * yingYang());
 		var coord2 = Math.random() * game.screenX;
-		if (yingYang() > 0) {
-			var x = coord1;
-			var y = coord2;
+		var x, y;
+    if (yingYang() > 0) {
+			x = coord1;
+			y = coord2;
 		} else {
-			var y = coord1;
-			var x = coord2;
+			y = coord1;
+			x = coord2;
 		}
 		result.push(
 			new Asteroid(
@@ -63,10 +63,10 @@ Asteroid.respawn = function(game) {
 				Asteroid.MAX_VELOCITY * Math.random() * yingYang(),
 				game
 			)
-		)
+		);
 	}
 	return result;
-}
+};
 
 Asteroid.prototype = new Surrogate();
 
@@ -84,4 +84,4 @@ Asteroid.prototype.render = function (ctx) {
   ctx.strokeStyle = "white";
   ctx.lineWidth = 1.25;
   ctx.stroke();
-}
+};

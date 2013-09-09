@@ -1,12 +1,13 @@
 var MovingObjects = (function () {
 
-  function MovingObject(centerX,centerY,radius) {
+  function MovingObject (centerX, centerY, radius) {
     this.centerX = centerX;
     this.centerY = centerY;
     this.radius = radius;
-  };
+  }
 
   MovingObject.MAX_RADIUS = 25;
+
   MovingObject.randomMovingObject = function (screenX, screenY) {
     return new MovingObject(
       screenX * Math.random(),
@@ -16,15 +17,15 @@ var MovingObjects = (function () {
   };
 
   MovingObject.prototype.update = function (deltaX, deltaY) {
-		switch (this.offScreen(500,500)) {
+		switch (this.offScreen(500, 500)) {
 		case "right":
 			this.centerX = 501 - this.centerX;
 			break;
 		case "left":
-			this.centerX = 499 - this.centerX
+			this.centerX = 499 - this.centerX;
 			break;
 		}
-		switch (this.offScreen(500,500)) {
+		switch (this.offScreen(500, 500)) {
 		case "top":
 			this.centerY = 499 - this.centerY;
 			break;
@@ -38,23 +39,24 @@ var MovingObjects = (function () {
 
   MovingObject.prototype.offScreen = function (screenX, screenY) {
     if (this.centerX > (this.radius + screenX)) {
-      return "right"
+      return "right";
     } else if ((this.centerX + this.radius) < 0) {
-      return "left"
+      return "left";
     } else if ((this.centerY + this.radius) < 0){
-    	return "top"
+      return "top";
     } else if (this.centerY > (this.radius + screenY)){
-			return "bottom"
+			return "bottom";
 		} else {
-      return false
+      return false;
     }
   };
 	
 	MovingObject.prototype.isHit = function (object) {
 		var that = this;
-		var distance = Math.sqrt(Math.pow(that.centerX - object.centerX, 2) + Math.pow(that.centerY - object.centerY, 2));
-		return distance < this.radius + object.radius
-	}
+		var distance = Math.sqrt(Math.pow(that.centerX - object.centerX, 2) +
+      Math.pow(that.centerY - object.centerY, 2));
+		return distance < this.radius + object.radius;
+	};
 
   return {
     MovingObject: MovingObject

@@ -2,6 +2,7 @@ var Game = function (screenX, screenY, numAsteroids) {
   this.screenX = screenX;
   this.screenY = screenY;
 	this.numAsteroids = numAsteroids;
+
   this.asteroids = this.makeAsteroids(numAsteroids);
 	this.bullets = [];
   this.ship = new Ship(this);
@@ -13,17 +14,19 @@ var Game = function (screenX, screenY, numAsteroids) {
 };
 
 Game.prototype.nextLife = function(){
-	this.asteroids = this.makeAsteroids(10);
+	var that = this;
+  this.asteroids = this.makeAsteroids(that.numAsteroids);
+
 	this.ship.centerX = this.screenX/2;
 	this.ship.centerY = this.screenY/2;
   this.ship.angle = 0;
-  this.ship.velocity = { x:0, y:0 }
-  this.ship.acceleration = { x:0, y:0 }
+  this.ship.velocity = { x:0, y:0 };
+  this.ship.acceleration = { x:0, y:0 };
   this.ship.angularVelocity = 0;
 	this.ship.power = false;
 	this.ship.hasBullets = true;
 	this.bullets = [];
-}
+};
 
 Game.prototype.resetGame = function(){
 	this.score = 0;
@@ -32,7 +35,7 @@ Game.prototype.resetGame = function(){
 	this.gameOver = false;
 	this.seconds = 0;
 	this.tenths = 0;
-}
+};
 
 Game.prototype.makeAsteroids = function (num) {
   var that = this;
@@ -57,7 +60,7 @@ Game.prototype.render = function (ctx) {
 	
 	var renderBullet = function (bullet){
 		bullet.render(ctx);
-	}
+	};
 
   _.each(this.asteroids, renderAsteroid);
   this.ship.render(ctx);
@@ -74,9 +77,9 @@ Game.prototype.render = function (ctx) {
 	if (this.lives < 1){
 		ctx.fillStyle = "white";
 		ctx.font = "20pt Arial";
-		ctx.fillText("GAMEOVER", 170,250);
+		ctx.fillText("GAMEOVER", 170, 250);
 		ctx.font = "10pt Arial";
-		ctx.fillText("press space to continue", 180,265)
+		ctx.fillText("press space to continue", 180, 265);
 		that.gameOver = true;
 	}
 };
@@ -102,7 +105,7 @@ Game.prototype.draw = function (canvasEl) {
 	}, 1000);
 	
 	key('space', function(){
-		if(that.gameOver){		
+		if(that.gameOver){
 			that.resetGame();
 		}
 	});
@@ -142,13 +145,13 @@ Game.prototype.update = function () {
 			that.ship.acceleration.x = 0;
 		}
 		
-	  that.ship.velocity.x += that.ship.acceleration.x;
-	  that.ship.velocity.y -= that.ship.acceleration.y;
+    that.ship.velocity.x += that.ship.acceleration.x;
+    that.ship.velocity.y -= that.ship.acceleration.y;
 
-	  that.ship.angle += that.ship.angularVelocity
+    that.ship.angle += that.ship.angularVelocity
 		
     that.ship.update(that.ship.velocity.x, that.ship.velocity.y);
-  }
+  };
 
 	var updateBullet = function (bullet) {
 		var index = that.bullets.indexOf(bullet);
@@ -158,10 +161,12 @@ Game.prototype.update = function () {
 			bullet.update( bullet.velocity.x, bullet.velocity.y );
 		}
 		_.each(that.asteroids, function(asteroid){
-			if(bullet.isHit(asteroid)){
-			  var yingYang = function() {
-			    return [-1,1][Math.floor(Math.random()*2)];
-			  }
+			if (bullet.isHit(asteroid)) {
+        // Randomize between 1 and -1
+        var yingYang = function() {
+          return [-1,1][Math.floor(Math.random()*2)];
+        };
+
 				var asteroidIndex = that.asteroids.indexOf(asteroid);
 				that.bullets.splice(index, 1);
 				that.score += 10;
@@ -190,5 +195,4 @@ Game.prototype.update = function () {
 	_.each(this.bullets,updateBullet)
   _.each(this.asteroids, updateAsteroid);
   updateShip();
-
 };

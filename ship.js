@@ -1,32 +1,31 @@
-function Surrogate2() {};
+function Surrogate2() {}
 Surrogate2.prototype = MovingObjects.MovingObject.prototype;
 
 var Ship = function (game, radius) {
   MovingObjects.MovingObject.call(this,game.screenX/2,game.screenY/2,4);
   this.game = game;
   this.angle = 0;
-  this.velocity = { x:0, y:0 }
-  this.acceleration = { x:0, y:0 }
+  this.velocity = { x:0, y:0 };
+  this.acceleration = { x:0, y:0 };
   this.angularVelocity = 0;
 	this.power = false;
 	this.hasBullets = true;
 
   var that = this;
-  key('left', function(){ that.angularVelocity = -(Math.PI/30) });
-  key('right', function(){ that.angularVelocity = (Math.PI/30) });
-  key('up', function(){ that.power = true });
+  key('left', function(){ that.angularVelocity = -(Math.PI/30); });
+  key('right', function(){ that.angularVelocity = (Math.PI/30); });
+  key('up', function(){ that.power = true; });
 	key('space', function(){
 		if(that.hasBullets){
 			that.fireBullet();
 		}
 	});
 
-  keyup('right', function(){ that.angularVelocity = 0 });
-  keyup('left', function(){ that.angularVelocity = 0 });
-  keyup('up', function(){ that.power = false });
-	keyup('space', function(){ that.hasBullets = true });
-
-}
+  keyup('right', function(){ that.angularVelocity = 0; });
+  keyup('left', function(){ that.angularVelocity = 0; });
+  keyup('up', function(){ that.power = false; });
+	keyup('space', function(){ that.hasBullets = true; });
+};
 
 Ship.prototype = new Surrogate2();
 
@@ -55,12 +54,20 @@ Ship.prototype.fireBullet = function () {
 	this.hasBullets = false;
 	var bullet = new Bullet(this);
 	this.game.bullets.push(bullet);
-}
+};
 
 var Bullet = function(ship){
-	MovingObjects.MovingObject.call(this,(ship.centerX + Math.sin(ship.angle)*8),(ship.centerY + -Math.cos(ship.angle)*8),1);
-	this.velocity = { x: (Math.sin(ship.angle)*8 + ship.velocity.x), y: (-Math.cos(ship.angle)*8 + ship.velocity.y) }
-}
+	MovingObjects.MovingObject.call(
+    this,
+    (ship.centerX + Math.sin(ship.angle)*8),
+    (ship.centerY + -Math.cos(ship.angle)*8),
+    1
+  );
+	this.velocity = {
+    x: (Math.sin(ship.angle)*8 + ship.velocity.x),
+    y: (-Math.cos(ship.angle)*8 + ship.velocity.y)
+  };
+};
 
 Bullet.prototype = new Surrogate2();
 
@@ -78,5 +85,4 @@ Bullet.prototype.render = function (ctx) {
   ctx.strokeStyle = 'white';
   ctx.lineWidth = 1.25;
   ctx.stroke();
-}
-
+};
