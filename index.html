@@ -1,7 +1,6 @@
 <html>
 <head>
 	<link rel="stylesheet" href="./style.css">
-  <script src="jquery-1.9.1.js"></script>
   <script src="underscore-min.js"></script>
   <script src="keymaster.min.js"></script>
   <script src="keyup.js"></script>
@@ -14,13 +13,17 @@
 <body>
 
   <script>
-  	$(document).ready(function () {
-  		var canvasHtml = $('<canvas width="' + 500 +
-		    '" height="' + 500 + '"></canvas>');
-		  $('body').append(canvasHtml);
+    function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
 
-		  new Game(500, 500, 10).draw(canvasHtml.get(0));
-  	})
+    r(function(){
+  		var canvasHtml = document.createElement('canvas');
+      canvasHtml.setAttribute("width", 500);
+      canvasHtml.setAttribute("height", 500);
+
+		  document.getElementsByTagName('body')[0].appendChild(canvasHtml);
+
+		  new Game(500, 500, 10).draw(canvasHtml);
+    });
   </script>
 </body>
 </html>
