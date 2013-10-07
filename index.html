@@ -13,16 +13,19 @@
 <body>
 
   <script>
+    window.screenX = 500;
+    window.screenY = 500;
+
     function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
 
     r(function(){
   		var canvasHtml = document.createElement('canvas');
-      canvasHtml.setAttribute("width", 500);
-      canvasHtml.setAttribute("height", 500);
+      canvasHtml.setAttribute("width", screenX);
+      canvasHtml.setAttribute("height", screenY);
 
 		  document.getElementsByTagName('body')[0].appendChild(canvasHtml);
 
-		  new Game(500, 500, 10).draw(canvasHtml);
+		  new Game(screenX, screenY, 10).draw(canvasHtml);
     });
   </script>
 </body>
