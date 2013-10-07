@@ -7,3 +7,7 @@ Asteroids
 
 ##TODO:
 * Don't iterate through asteroids to check for collisions, implement a [quadtree](https://github.com/ilyakava/asteroids_redo)
+    * [example](https://github.com/silflow/quadtree-javascript/blob/master/quadtree.js)
+* Don't use circle asteroids
+    *  check for collisions with [SAT](http://gamedev.tutsplus.com/tutorials/implementation/collision-detection-with-the-separating-axis-theorem/)
+    *  
